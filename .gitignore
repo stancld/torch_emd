@@ -3,3 +3,12 @@ torch_emd.egg-info/
 build/
 dist/
 .cache
+
+# Sphinx documentation
+docs/_build/
+docs/source/api/
+docs/source/_build/
+docs/source/generated/
+docs/source/public/
+docs/source/*.md
+docs/source/public

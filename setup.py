@@ -26,8 +26,9 @@ BASE_REQUIREMENTS = setup_tools._load_requirements(path_dir=_PATH_ROOT, file_nam
 # Test requirements
 _test_reqs = setup_tools._load_requirements(path_dir=_PATH_ROOT, file_name="requirements/test.txt")
 TEST_REQUIREMENTS = BASE_REQUIREMENTS + _test_reqs
+_docs_reqs = setup_tools._load_requirements(path_dir=_PATH_ROOT, file_name="requirements/docs.txt")
 _devel_reqs = setup_tools._load_requirements(path_dir=_PATH_ROOT, file_name="requirements/devel.txt")
-DEVEL_REQUIREMENTS = TEST_REQUIREMENTS + _devel_reqs
+DEVEL_REQUIREMENTS = TEST_REQUIREMENTS + _docs_reqs + _devel_reqs
 
 with open(os.path.join(_PATH_ROOT, _README_FILE_NAME), encoding="utf-8") as f:
     README_FILE = f.read()
