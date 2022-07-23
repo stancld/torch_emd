@@ -28,7 +28,7 @@ jobs:
           pip install -r requirements.txt
           pip install -r requirements/test.txt
       - name: Tests
-        run: python -m pytest donalg tests -v --cov=donalg  --junitxml="junit/$PYTEST_ARTIFACT"
+        run: python -m pytest torch_emd tests -v --cov=torch_emd  --junitxml="junit/$PYTEST_ARTIFACT"
 
       - name: Upload pytest results
         uses: actions/upload-artifact@v3
