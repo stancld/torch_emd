@@ -24,8 +24,10 @@ about = _load_py_module("__about__.py")
 
 BASE_REQUIREMENTS = setup_tools._load_requirements(path_dir=_PATH_ROOT, file_name="requirements.txt")
 # Test requirements
+_test_reqs = setup_tools._load_requirements(path_dir=_PATH_ROOT, file_name="requirements/test.txt")
+TEST_REQUIREMENTS = BASE_REQUIREMENTS + _test_reqs
 _devel_reqs = setup_tools._load_requirements(path_dir=_PATH_ROOT, file_name="requirements/devel.txt")
-DEVEL_REQUIREMENTS = BASE_REQUIREMENTS + _devel_reqs
+DEVEL_REQUIREMENTS = TEST_REQUIREMENTS + _devel_reqs
 
 with open(os.path.join(_PATH_ROOT, _README_FILE_NAME), encoding="utf-8") as f:
     README_FILE = f.read()
@@ -44,7 +46,7 @@ setup(
     keywords=["statistics", "machine learning"],
     python_requires=">=3.8",
     install_requires=BASE_REQUIREMENTS,
-    extras_require={"dev": DEVEL_REQUIREMENTS},
+    extras_require={"test": TEST_REQUIREMENTS, "dev": DEVEL_REQUIREMENTS},
     include_package_data=True,
     classifiers=[
         "Natural Language :: English",
