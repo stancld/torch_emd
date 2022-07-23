@@ -10,7 +10,7 @@ include LICENSE
 
 # Include the Requirements
 include requirements.txt
-recursive-include reqirements *.txt
+recursive-include requirements *.txt
 
 # Exclude build configs
 exclude *.yml
