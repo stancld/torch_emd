@@ -1,0 +1,51 @@
+name: CI testing
+
+# see: https://help.github.com/en/actions/reference/events-that-trigger-workflows
+on:  # Trigger the workflow on push or pull request, but only for the master branch
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  pytest:
+    runs-on: ubuntu-20.04
+    env:
+      PYTEST_ARTIFACT: test-results.xml
+
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-python@v3
+        with:
+          python-version: 3.9
+
+      - name: Setup OS
+        run: |
+          sudo apt update --fix-missing
+          sudo apt install -y ffmpeg
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install -r requirements/test.txt
+      - name: Tests
+        run: python -m pytest donalg tests -v --cov=donalg  --junitxml="junit/$PYTEST_ARTIFACT"
+
+      - name: Upload pytest results
+        uses: actions/upload-artifact@v3
+        with:
+          name: $PYTEST_ARTIFACT
+          path: "junit/$PYTEST_ARTIFACT"
+        if: failure()
+
+      - name: Coverage statistics
+        if: success()
+        run: |
+          coverage xml
+          coverage report
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./coverage.xml
+          name: codecov-umbrella
+          fail_ci_if_error: false
